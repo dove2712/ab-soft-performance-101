@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "7c08250a-0d4e-4fec-94b8-65990252df09",
+		"name": "performance-101",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication service",
+			"item": [
+				{
+					"name": "/api/auth/generate_token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9370bf56-cf0e-4b13-a003-a47d38ce1ec5",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"  -- 1+1\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "01c66eae-abf1-4f7f-8d5d-8d569aeabae5",
+								"exec": [
+									"console.log(pm.variables.get('token_id'));\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable (\"token_id\", jsonData.token);\r",
+									"console.log(pm.variables.get(\"token_id\"));\r",
+									"pm.environment.get(\"token_id\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7778/api/auth/generate_token",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7778",
+							"path": [
+								"api",
+								"auth",
+								"generate_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/validate_token/<string:token_id>",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "963a6622-ce80-42a0-aee3-21471cd7410f",
+								"exec": [
+									"console.log(pm.variables.get(\"token_id\")+\"   .\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "894b2a8a-fc50-42cb-ae5b-f39202caf881",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"   -- 1+1\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7778/api/auth/validate_token/{{token_id}}",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7778",
+							"path": [
+								"api",
+								"auth",
+								"validate_token",
+								"{{token_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product service",
+			"item": [
+				{
+					"name": "/api/products/get_all",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8b841e5a-2470-4d3e-a534-c9040dee42e4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b0ecbbd-5ddd-48c6-80c4-7d4faa9a63c2",
+								"exec": [
+									"console.log(pm.variables.get('product_id'));\r",
+									"var jsonData1 = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable ('product_id', jsonData1[\"0\"][\"_id\"]);\r",
+									"console.log(pm.variables.get('product_id'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=998a24af-6ab1-41d0-b724-1336cf39a233",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7777/api/products/get_all",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7777",
+							"path": [
+								"api",
+								"products",
+								"get_all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/get_product/<string:product_id>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7777/api/products/get_product/{{product_id}}",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7777",
+							"path": [
+								"api",
+								"products",
+								"get_product",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart service",
+			"item": [
+				{
+					"name": "/api/cart/get_items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7779/api/cart/get_items",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"get_items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/cart/add_item/<string:product_id>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7779/api/cart/add_item/{{product_id}}",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"add_item",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/cart/checkout",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://192.168.99.100:7779/api/cart/checkout",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"99",
+								"100"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "da9c8100-bf2a-445a-97b8-e675fe54bc98",
+				"type": "text/javascript",
+				"exec": [
+					"// var jsonData = JSON.parse(responseBody);",
+					"// postman.setEnvironmentVariable (\"token_id\", jsonData.token);",
+					"// console.log(pm.variables.get(\"token_id\"));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2200e0aa-fc08-4bd8-818b-ede11d445a7c",
+				"type": "text/javascript",
+				"exec": [
+					"// var jsonData = JSON.parse(responseBody);",
+					"// postman.setEnvironmentVariable (\"token_id\", jsonData.token);",
+					"// console.log(pm.variables.get(\"token_id\"));"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "180342c7-bad2-4c9c-a435-0bebffb2e882",
+			"key": "token_id1",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "b31a1c1d-a0f9-4841-9163-8833c4dcf0e0",
+			"key": "product_id",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
